@@ -1,0 +1,25 @@
+
+
+/* input[type=checkbox]{
+    margin-left: -2em;
+} */
+
+
+/*左侧菜单*/
+.articles {
+    display: none;
+}
+
+#book-search-input {
+    background: #2d3143;
+    border-bottom: 1px solid #c1c6d7;
+}
+/*左侧gitbook链接*/
+.gitbook-link {
+    display: none !important;
+}
+
+/*代码块字体大小*/
+code {
+    font-size: 16px !important;
+}
