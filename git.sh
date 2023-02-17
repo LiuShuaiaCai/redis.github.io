@@ -11,4 +11,5 @@ fi
 echo ${msg}
 git add -A
 git commit -am "${msg}"
+git pull
 git push origin master
