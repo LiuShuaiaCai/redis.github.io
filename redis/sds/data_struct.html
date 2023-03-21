@@ -1,0 +1,536 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>SDS数据结构 · Lsc'Redis</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="LiuShuaicai">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="diff_c.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://blog.liushuaicai.com" target="_blank" class="custom-link">Lsc'Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../config/">
+            
+                <a href="../config/">
+            
+                    
+                    配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../robj/">
+            
+                <a href="../robj/">
+            
+                    
+                    Redis对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../string/">
+            
+                <a href="../string/">
+            
+                    
+                    Redis字符串
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    SDS定义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.2" data-path="data_struct.html">
+            
+                <a href="data_struct.html">
+            
+                    
+                    SDS数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="diff_c.html">
+            
+                <a href="diff_c.html">
+            
+                    
+                    SDS与C字符串的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="make_room.html">
+            
+                <a href="make_room.html">
+            
+                    
+                    SDS扩容策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="source_code.html">
+            
+                <a href="source_code.html">
+            
+                    
+                    SDS函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../gdb/">
+            
+                <a href="../gdb/">
+            
+                    
+                    GDB使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../question/">
+            
+                <a href="../question/">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >SDS数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#sds&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;"><b>1. </b>SDS&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</a></li><ul><li><span class="title-icon "></span><a href="#&#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;"><b>1.1. </b>&#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;</a></li><li><span class="title-icon "></span><a href="#flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;"><b>1.2. </b>flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;</a></li><li><span class="title-icon "></span><a href="#sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><b>1.3. </b>SDS&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;</a></li></ul></ul></div><a href="#sds&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="sds&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;"><a name="sds&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;" class="anchor-navigation-ex-anchor" href="#sds&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;"><i class="fa fa-link" aria-hidden="true"></i></a>1. SDS&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</h1>
+<p>sds&#x662F;char*&#x7684;&#x522B;&#x540D;&#xFF0C;&#x5177;&#x4F53;&#x7684;SDS&#x5934;&#x4FE1;&#x606F;&#x6709;5&#x79CD;&#xFF1A;sdshdr5&#x3001;sdshdr8&#x3001;sdshdr16&#x3001;sdshdr32&#x3001;sdshdr64&#xFF0C;&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x6CE8;&#x610F;:sdshdr5&#x4ECE;&#x672A;&#x88AB;&#x4F7F;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x662F;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x6807;&#x5FD7;&#x5B57;&#x8282;&#x3002;</span>
+<span class="hljs-comment">// &#x7136;&#x800C;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x4E3A;&#x4E86;&#x8BB0;&#x5F55;&#x7C7B;&#x578B;&#x4E3A;5&#x7684;SDS&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5E03;&#x5C40;&#x3002;</span>
+<span class="hljs-keyword">struct</span> __attribute__ ((__packed__)) sdshdr5 {
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flags; <span class="hljs-comment">/* &#x4F4E;3&#x4F4D;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x9AD8;5&#x4F4D;&#x5B58;&#x50A8;&#x957F;&#x5EA6;&#xFF0C;&#x957F;&#x5EA6;&#x533A;&#x95F4;&#x4E3A;0~31(2^5-1) */</span>
+    <span class="hljs-keyword">char</span> buf[]; <span class="hljs-comment">/* &#x67D4;&#x6027;&#x6570;&#x7EC4;&#xFF0C;&#x5B58;&#x653E;&#x5B9E;&#x9645;&#x5185;&#x5BB9; */</span>
+};
+<span class="hljs-keyword">struct</span> __attribute__ ((__packed__)) sdshdr8 {
+    <span class="hljs-keyword">uint8_t</span> len; <span class="hljs-comment">/* buf&#x5DF2;&#x4F7F;&#x7528;&#x957F;&#x5EA6;&#xFF0C;&#x7528;1&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8; */</span>
+    <span class="hljs-keyword">uint8_t</span> alloc; <span class="hljs-comment">/* &#x603B;&#x957F;&#x5EA6;&#xFF0C;&#x7528;1&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x5927;&#x5B58;&#x50A8;&#x7684;&#x5B57;&#x7B26;&#x957F;&#x5EA6;&#x4E3A;32k&#xFF08;2^8-1&#xFF09; */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flags; <span class="hljs-comment">/* &#x4F4E;3&#x4F4D;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x9AD8;5&#x4F4D;&#x9884;&#x7559; */</span>
+    <span class="hljs-keyword">char</span> buf[];
+};
+<span class="hljs-keyword">struct</span> __attribute__ ((__packed__)) sdshdr16 {
+    <span class="hljs-keyword">uint16_t</span> len; <span class="hljs-comment">/* buf&#x5DF2;&#x4F7F;&#x7528;&#x957F;&#x5EA6;&#xFF0C;&#x7528;2&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8; */</span>
+    <span class="hljs-keyword">uint16_t</span> alloc; <span class="hljs-comment">/* &#x603B;&#x957F;&#x5EA6;&#xFF0C;&#x7528;2&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x5927;&#x5B58;&#x50A8;&#x7684;&#x5B57;&#x7B26;&#x957F;&#x5EA6;&#x4E3A;&#xFF08;2^16-1&#xFF09; */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flags; <span class="hljs-comment">/* &#x4F4E;3&#x4F4D;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x9AD8;5&#x4F4D;&#x9884;&#x7559; */</span>
+    <span class="hljs-keyword">char</span> buf[];
+};
+<span class="hljs-keyword">struct</span> __attribute__ ((__packed__)) sdshdr32 {
+    <span class="hljs-keyword">uint32_t</span> len; <span class="hljs-comment">/* buf&#x5DF2;&#x4F7F;&#x7528;&#x957F;&#x5EA6;&#xFF0C;&#x7528;4&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8; */</span>
+    <span class="hljs-keyword">uint32_t</span> alloc; <span class="hljs-comment">/* &#x603B;&#x957F;&#x5EA6;&#xFF0C;&#x7528;4&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x5927;&#x5B58;&#x50A8;&#x7684;&#x5B57;&#x7B26;&#x957F;&#x5EA6;&#x4E3A;&#xFF08;2^32-1&#xFF09; */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flags; <span class="hljs-comment">/* &#x4F4E;3&#x4F4D;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x9AD8;5&#x4F4D;&#x9884;&#x7559; */</span>
+    <span class="hljs-keyword">char</span> buf[];
+};
+<span class="hljs-keyword">struct</span> __attribute__ ((__packed__)) sdshdr64 {
+    <span class="hljs-keyword">uint64_t</span> len; <span class="hljs-comment">/* buf&#x5DF2;&#x4F7F;&#x7528;&#x957F;&#x5EA6;&#xFF0C;&#x7528;8&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8; */</span>
+    <span class="hljs-keyword">uint64_t</span> alloc; <span class="hljs-comment">/* &#x603B;&#x957F;&#x5EA6;&#xFF0C;&#x7528;8&#x4E2A;&#x5B57;&#x8282;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x5927;&#x5B58;&#x50A8;&#x7684;&#x5B57;&#x7B26;&#x957F;&#x5EA6;&#x4E3A;(2^64-1) */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flags; <span class="hljs-comment">/* &#x4F4E;3&#x4F4D;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x9AD8;5&#x4F4D;&#x9884;&#x7559; */</span>
+    <span class="hljs-keyword">char</span> buf[];
+};
+</code></pre>
+<p>&#x8FD9;5&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5C31;&#x5728;&#x4E8E;&#xFF0C;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#x7684;len&#x548C;alloc&#x5360;&#x636E;&#x7684;&#x5927;&#x5C0F;&#x4E0D;&#x540C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x80FD;&#x5B58;&#x50A8;&#x7684;&#x957F;&#x5EA6;&#x4E0D;&#x540C;&#x3002;</p>
+<p>sds5&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;
+<img src="../../images/sdshdr5.jpg" alt="sdshdr5&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7C7B;&#x578B;"></p>
+<p>sdshdr8&#x3001;sdshdr16&#x3001;sdshdr32&#x548C;sdshdr64&#x7684;&#x7ED3;&#x6784;&#x76F8;&#x540C;&#xFF0C;sdshdr16&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;
+<img src="../../images/sdshdr16.jpg" alt="sdshdr16&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7C7B;&#x578B;"></p>
+<h2 id="&#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;"><a name="&#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#&#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. &#x4E3A;&#x5565;&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1F;</h2>
+<h4 id="&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;"><a name="&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;" class="anchor-navigation-ex-anchor" href="#&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;" class="plugin-anchor" href="#&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;"><i class="fa fa-link" aria-hidden="true"></i></a><div style="color:red">&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x3002;</div></h4>
+<p>3.2&#x7248;&#x672C;&#x4E4B;&#x524D;&#xFF0C;sdshdr&#x53EA;&#x6709;&#x4E00;&#x79CD;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> sdshdr {
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> len;   <span class="hljs-comment">/* buf&#x5DF2;&#x4F7F;&#x7528;&#x957F;&#x5EA6;&#xFF0C;4&#x5B57;&#x8282; */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-built_in">free</span>;  <span class="hljs-comment">/* buf&#x5269;&#x4F59;&#x957F;&#x5EA6;&#xFF0C;4&#x5B57;&#x8282; */</span>
+    <span class="hljs-keyword">char</span> buf[];         <span class="hljs-comment">/* &#x67D4;&#x6027;&#x6570;&#x7EC4;&#xFF0C;&#x5B58;&#x653E;&#x5B9E;&#x9645;&#x5185;&#x5BB9; */</span>
+};
+</code></pre>
+<p>&#x8FD9;&#x79CD;&#x56FA;&#x5B9A;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x4E0D;&#x7528;&#x5224;&#x65AD;&#x7C7B;&#x578B;&#xFF0C;&#x4F7F;&#x7528;&#x6548;&#x7387;&#x5F88;&#x9AD8;&#x3002;&#x8FD9;&#x6837;&#x4E5F;&#x6709;&#x4E00;&#x4E2A;&#x5F0A;&#x7AEF;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E0D;&#x7BA1;&#x5B57;&#x7B26;&#x4E32;&#x6709;&#x591A;&#x957F;&#xFF0C;&#x5B83;&#x7684;&#x5934;&#x4FE1;&#x606F;&#x56FA;&#x5B9A;&#x662F;8&#x4E2A;&#x5B57;&#x8282;&#xFF0C;&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x7684;&#x5E94;&#x7528;&#x4E2D;&#x5927;&#x90E8;&#x5206;&#x5B57;&#x7B26;&#x4E32;&#x90FD;&#x4E0D;&#x4F1A;&#x90A3;&#x4E48;&#x957F;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x6837;&#x4E5F;&#x8981;&#x6D6A;&#x8D39;&#x5F88;&#x591A;&#x5185;&#x5B58;&#x3002;</p>
+<p>&#x8BBE;&#x8BA1;&#x6210;&#x591A;&#x79CD;header&#x5934;&#x4FE1;&#x606F;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;header&#x5934;&#x4FE1;&#x606F;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;SDS&#x7684;&#x6548;&#x7387;&#x548C;&#x7075;&#x6D3B;&#x6027;&#xFF0C;&#x4EE5;&#x53CA;&#x652F;&#x6301;&#x4E0D;&#x540C;&#x7684;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x3002;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5927;&#x90E8;&#x5206;&#x5B57;&#x7B26;&#x4E32;&#x4E0D;&#x4F1A;&#x8D85;&#x8FC7;32k&#xFF0C;&#x53EA;&#x8981;&#x4F7F;&#x7528;sdshdr8&#x5C31;&#x884C;&#x3002;</p>
+<p><img src="../../images/sds_old_new_diff.jpg" alt="sdshdr&#x65B0;&#x8001;&#x6570;&#x636E;&#x7ED3;&#x6784;"></p>
+<blockquote>
+<p>Redis&#x662F;&#x57FA;&#x4E8E;&#x5185;&#x5B58;&#x7684;&#xFF0C;&#x800C;&#x5185;&#x5B58;&#x6C38;&#x8FDC;&#x90FD;&#x662F;&#x73CD;&#x8D35;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x90FD;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x6240;&#x4EE5;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x5927;&#x5C0F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x4E5F;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x5185;&#x5B58;&#x8D44;&#x6E90;</p>
+</blockquote>
+<h2 id="flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;"><a name="flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. flags&#x6709;&#x54EA;&#x4E9B;&#x503C;&#xFF1F;</h2>
+<pre><code class="lang-c"><span class="hljs-comment">// flags&#x53C2;&#x6570;&#x6709;0&#xFF5E;4&#x4E94;&#x79CD;&#x7C7B;&#x578B;&#x6765;&#x5206;&#x522B;&#x8868;&#x793A;SDS&#x7684;&#x7C7B;&#x578B;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_5  0</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_8  1</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_16 2</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_32 3</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_64 4</span>
+<span class="hljs-comment">// SDS&#x7C7B;&#x578B;&#x786E;&#x5B9A;&#xFF1A;type&amp;SDS_TYPE_MASK</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SDS_TYPE_MASK 7</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>SDS&#x7C7B;&#x578B;</th>
+<th>&#x957F;&#x5EA6;&#x8303;&#x56F4;</th>
+<th>&#x7C7B;&#x578B;&#x503C;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SDS_TYPE_5</td>
+<td>0 ~ 31</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SDS_TYPE_8</td>
+<td>32 ~ 2^8-1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>SDS_TYPE_16</td>
+<td>2^8 ~ 2^16-1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>SDS_TYPE_32</td>
+<td>2^16 ~ 2^32-1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>SDS_TYPE_64</td>
+<td>2^32 ~ 2^64-1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><a name="sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. SDS&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;</h2>
+<h4 id="&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><a name="&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;" class="plugin-anchor" href="#&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#xFF1F;</h4>
+<p>(1) &#x6027;&#x80FD;&#x539F;&#x56E0;&#xFF1A;&#x6570;&#x636E;&#x7ED3;&#x6784;(&#x5C24;&#x5176;&#x662F;&#x6808;)&#x5E94;&#x8BE5;&#x5C3D;&#x53EF;&#x80FD;&#x5730;&#x5728;&#x81EA;&#x7136;&#x8FB9;&#x754C;&#x4E0A;&#x5BF9;&#x9F50;&#x3002;&#x539F;&#x56E0;&#x5728;&#x4E8E;&#xFF0C;&#x4E3A;&#x4E86;&#x8BBF;&#x95EE;&#x672A;&#x5BF9;&#x9F50;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x5904;&#x7406;&#x5668;&#x9700;&#x8981;&#x4F5C;&#x4E24;&#x6B21;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#xFF1B;&#x800C;&#x5BF9;&#x9F50;&#x7684;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x4EC5;&#x9700;&#x8981;&#x4E00;&#x6B21;&#x8BBF;&#x95EE;&#xFF0C;&#x5BF9;&#x9F50;&#x586B;&#x5145;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;<code>CPU</code>&#x7684;&#x6570;&#x636E;&#x8BFB;&#x53D6;&#x6548;&#x7387;&#x3002;</p>
+<p>(2) &#x5E73;&#x53F0;&#x539F;&#x56E0;&#xFF1A;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7684;&#x786C;&#x4EF6;&#x5E73;&#x53F0;&#x90FD;&#x80FD;&#x8BBF;&#x95EE;&#x4EFB;&#x610F;&#x5730;&#x5740;&#x4E0A;&#x7684;&#x4EFB;&#x610F;&#x6570;&#x636E;&#x7684;&#xFF1B;&#x67D0;&#x4E9B;&#x786C;&#x4EF6;&#x5E73;&#x53F0;&#x53EA;&#x80FD;&#x5728;&#x67D0;&#x4E9B;&#x5730;&#x5740;&#x5904;&#x53D6;&#x67D0;&#x4E9B;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x3002;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x662F;&#x5982;&#x679C;&#x4E0D;&#x6309;&#x7167;&#x9002;&#x5408;&#x5176;&#x5E73;&#x53F0;&#x7684;&#x8981;&#x6C42;&#x5BF9;&#x6570;&#x636E;&#x5B58;&#x653E;&#x8FDB;&#x884C;&#x5BF9;&#x9F50;&#xFF0C;&#x4F1A;&#x5728;&#x5B58;&#x53D6;&#x6548;&#x7387;&#x4E0A;&#x5E26;&#x6765;&#x635F;&#x5931;&#x3002;</p>
+<h4 id="sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;"><a name="sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;" class="anchor-navigation-ex-anchor" href="#sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a><a name="sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;" class="plugin-anchor" href="#sds&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;"><i class="fa fa-link" aria-hidden="true"></i></a>SDS&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5BF9;&#x9F50;&#xFF1F;</h4>
+<p>&#x4EE5;sdshdr32&#x4E3A;&#x4F8B;&#xFF0C;&#x4FEE;&#x9970;&#x524D;&#x6309;4&#x5B57;&#x8282;&#x5BF9;&#x9F50;&#x5927;&#x5C0F;&#x4E3A;12(4&#xD7;3)&#x5B57;&#x8282;&#xFF1B;&#x4FEE;&#x9970;&#x540E;&#x6309;1&#x5B57;&#x8282;&#x5BF9;&#x9F50;&#xFF0C;&#x6CE8;&#x610F;buf&#x662F;&#x4E2A;char&#x7C7B;&#x578B;&#x7684;&#x67D4;&#x6027;&#x6570;&#x7EC4;&#xFF0C;&#x5730;&#x5740;&#x8FDE;&#x7EED;&#xFF0C;&#x59CB;&#x7EC8;&#x5728;flags&#x4E4B;&#x540E;&#x3002;</p>
+<p><img src="../../images/sds_packed.jpg" alt="sdshdr32&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7C7B;&#x578B;"></p>
+<p>&#x4E0D;&#x91C7;&#x7528;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#x6709;&#x4E24;&#x4E2A;&#x597D;&#x5904;&#xFF1A;</p>
+<ul>
+<li>&#x8282;&#x7701;&#x5185;&#x5B58;&#xFF0C;&#x4ECE;&#x4E0A;&#x9762;sdshdr32&#x770B;&#x5230;&#x53EF;&#x4EE5;&#x8282;&#x7701;3&#x4E2A;&#x5B57;&#x8282;&#xFF08;12-9&#xFF09;&#xFF1B;</li>
+<li>&#x80FD;&#x66F4;&#x65B9;&#x4FBF;&#x7684;&#x8BA1;&#x7B97;buf&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x4EE5;&#x53CA;&#x53D6;flags&#x7684;&#x503C;&#xFF1B;<blockquote>
+<p>SDS&#x521B;&#x5EFA;&#x4E4B;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x4E0D;&#x662F;&#x7ED3;&#x6784;&#x4F53;&#x9996;&#x5730;&#x5740;,&#x800C;&#x662F;&#x6307;&#x5411;&#x5185;&#x5BB9;&#x7684;buf&#x6307;&#x9488;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;
+<img src="../../images/sdshdr32.jpg" alt="sdshdr32&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7C7B;&#x578B;">
+buf&#x6307;&#x9488;&#x5730;&#x5740; = (char*)sh+sizeof(sdshdr##T)&#x3002;flags = buf[-1]&#x3002;&#x82E5;&#x6CA1;&#x6709;packed&#x7684;&#x4FEE;&#x9970;,&#x8FD8;&#x9700;&#x8981;&#x5BF9;&#x4E0D;&#x540C;&#x7ED3;&#x6784;&#x8FDB;&#x884C;&#x5904;&#x7406;,&#x5B9E;&#x73B0;&#x66F4;&#x590D;&#x6742;&#x3002;</p>
+</blockquote>
+</li>
+</ul>
+<p>&#x1F330;&#x6267;&#x884C;&#x547D;&#x4EE4;&#xFF1A;<code>set name lsc</code>&#xFF1A;
+<img src="../../images/sds_example.jpg" alt="sds&#x4F8B;&#x5B50;">
+<img src="../../images/sds_example_2.jpg" alt="sds&#x4F8B;&#x5B50;"></p>
+<p>&#x6240;&#x4EE5;&#xFF0C;SDS&#x4E0D;&#x91C7;&#x7528;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#x662F;&#x4E3A;&#x4E86;&#x8282;&#x7701;&#x7A7A;&#x95F4;&#x3002;&#x5C3D;&#x7BA1;&#x4E0D;&#x91C7;&#x7528;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x5185;&#x5B58;&#x8BBF;&#x95EE;&#x6548;&#x7387;&#x4E0B;&#x964D;&#xFF0C;&#x4F46;&#x662F;&#x5728;Redis&#x7684;&#x5E94;&#x7528;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x66F4;&#x9AD8;&#x7684;&#x7A7A;&#x95F4;&#x5229;&#x7528;&#x7387;&#x548C;&#x66F4;&#x5FEB;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#x901F;&#x5EA6;&#x662F;&#x66F4;&#x4E3A;&#x91CD;&#x8981;&#x7684;&#x3002;</p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; Lsc 2022 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2023-03-09 21:34:56
+</span></footer><script>var _hmt = _hmt || [];(function() {var hm = document.createElement('script');hm.src = '//hm.baidu.com/hm.js?181780a9962d5f58cb82c8ce32b1ff71';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(hm, s);})();</script>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: SDS定义">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="diff_c.html" class="navigation navigation-next " aria-label="Next page: SDS与C字符串的区别">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"SDS数据结构","level":"1.4.2","depth":2,"next":{"title":"SDS与C字符串的区别","level":"1.4.3","depth":2,"path":"redis/sds/diff_c.md","ref":"redis/sds/diff_c.md","articles":[]},"previous":{"title":"SDS定义","level":"1.4.1","depth":2,"path":"redis/sds/README.md","ref":"redis/sds/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["fontsettings","highlight","-livereload","-search","search-pro","sharing","anchors","anchor-navigation-ex","ba","-expandable-chapters","expandable-chapters-small","toggle-chapters","splitter","tbfed-pagefooter","code","copy-code-button","-todo","-advanced-emoji","-chapter-fold"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Lsc 2022","modify_label":"修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":false},"fontsettings":{"family":"sans","size":2,"theme":"night"},"highlight":{},"anchor-navigation-ex":{"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"isRewritePageTitle":false,"showLevel":true,"showGoTop":true,"printLog":false,"multipleH1":true,"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false}},"expandable-chapters-small":{},"copy-code-button":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"ba":{"token":"181780a9962d5f58cb82c8ce32b1ff71"}},"theme":"default","author":"LiuShuaicai","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Lsc'Redis","language":"zh-hans","links":{"sidebar":{"Lsc'Home":"http://blog.liushuaicai.com"}},"gitbook":"3.2.3","description":"redis学习！","theme-default":{"showLevel":true}},"file":{"path":"redis/sds/data_struct.md","mtime":"2023-03-09T13:34:56.486Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-03-21T02:56:41.822Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+
